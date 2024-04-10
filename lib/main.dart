@@ -1,12 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:authentication_repository/authentication_repository.dart';
+import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:flutter/widgets.dart';
+import 'package:new_dinker/app/app.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // late binding
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = const AppBlocObserver();
 
-  runApp(MyApp());
+  await Firebase.initializeApp();
+
+  final authenticationRepository = AuthenticationRepository();
+  await authenticationRepository.user.first;
+
+  runApp(App(authenticationRepository: authenticationRepository));
 }
