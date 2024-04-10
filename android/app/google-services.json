@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "305710930303",
+    "project_id": "new-dinker",
+    "storage_bucket": "new-dinker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305710930303:android:4902d54a398d01b847624a",
+        "android_client_info": {
+          "package_name": "com.example.newdinker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5u37nOpeWWJSjJ9yEGpE_UQjwXH1wCes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
