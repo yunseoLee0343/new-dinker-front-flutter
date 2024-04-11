@@ -1,5 +1,4 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_dinker/app/app.dart';
@@ -27,17 +26,19 @@ class App extends StatelessWidget {
   }
 }
 
+
 class AppView extends StatelessWidget {
-  const AppView({super.key});
+  const AppView({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final appState = context.select((AppBloc bloc) => bloc.state);
+
+    return MaterialApp.router(
       theme: theme,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
-      ),
+      routerConfig: appRouter(context, appState.status),
+      //routerDelegate: appRouter(context, appState.status).routerDelegate,
+      //routeInformationParser: appRouter(context, appState.status).routeInformationParser,
     );
   }
 }

@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:new_dinker/app/app.dart';
 import 'package:new_dinker/home/home.dart';
+
+import 'package:new_dinker/fetch/view/brand.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,8 +14,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Image.asset('assets/logo.png', width: MediaQuery.sizeOf(context).width/3,),
           centerTitle: true,
@@ -35,22 +37,19 @@ class HomePage extends StatelessWidget {
               icon: Icon(Icons.store),
               label: 'Brands',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
           ],
           selectedItemColor: Colors.amber[800],
           onTap: (int index) {
             switch(index){
               case 0:
-                Navigator.pushNamed(context, '/home');
+                print(context.hashCode);
+                GoRouter.of(context).go('/home');
+                //context.goNamed('/home');
                 break;
               case 1:
-                Navigator.pushNamed(context, '/brands');
-                break;
-              case 2:
-                Navigator.pushNamed(context, '/profile');
+                print(context.hashCode);
+                GoRouter.of(context).go('/brands');
+                //context.goNamed('/brands');
                 break;
             }
           },
@@ -117,15 +116,15 @@ class HomePage extends StatelessWidget {
                         height: MediaQuery.sizeOf(context).height,
                         child: ListView.builder(
                           //scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: 100.0,
-                              child: Card(
-                                child: Text('data'),
-                              ),
-                            );
-                          }),
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                width: 100.0,
+                                child: Card(
+                                  child: Text('data'),
+                                ),
+                              );
+                            }),
                       ),
                     ],
                   ),
@@ -134,7 +133,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }
