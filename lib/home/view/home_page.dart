@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_dinker/app/app.dart';
 import 'package:new_dinker/home/home.dart';
-
 import 'package:new_dinker/fetch/view/brand.dart';
+import 'package:new_dinker/navigate/bloc/navigate_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,6 +14,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigationBloc = BlocProvider.of<NavigationBloc>(context);
+
     return Scaffold(
         appBar: AppBar(
           title: Image.asset('assets/logo.png', width: MediaQuery.sizeOf(context).width/3,),
@@ -38,18 +40,19 @@ class HomePage extends StatelessWidget {
               label: 'Brands',
             ),
           ],
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          currentIndex: selectedIndex,
           onTap: (int index) {
-            switch(index){
+            switch (index) {
               case 0:
-                print(context.hashCode);
-                GoRouter.of(context).go('/home');
-                //context.goNamed('/home');
+                print(context.hashCode.toString());
+                navigationBloc.add(NavigationEvent.home);
+                selectedIndex = 0;
                 break;
               case 1:
-                print(context.hashCode);
-                GoRouter.of(context).go('/brands');
-                //context.goNamed('/brands');
+                navigationBloc.add(NavigationEvent.brands);
+                selectedIndex = 1;
                 break;
             }
           },
