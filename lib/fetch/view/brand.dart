@@ -82,8 +82,6 @@ class _BrandPageState extends State<BrandPage> {
               padding: const EdgeInsets.all(8.0),
               sliver: BlocBuilder<FetchBloc, FetchState>(
                   builder: (context, state) {
-                    print(state.brands);
-
                     if (state is FetchLoading) {
                       return SliverList(
                           delegate: SliverChildBuilderDelegate(

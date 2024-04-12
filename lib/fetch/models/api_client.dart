@@ -6,8 +6,8 @@ class ApiClient {
 
   ApiClient(this.baseUrl);
 
-  Future<List<String>> fetchBrands() async {
-    final response = await http.get(Uri.parse('$baseUrl/hot'));
+  Future<List<String>> fetch(String detailUrl) async {
+    final response = await http.get(Uri.parse('$baseUrl' + detailUrl));
     //final response = await http.get(Uri.parse('$baseUrl/brands'));
 
     if (response.statusCode == 200) {

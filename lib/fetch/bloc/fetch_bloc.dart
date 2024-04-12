@@ -10,7 +10,7 @@ class FetchBloc extends Bloc<FetchEvent, FetchState> {
     on<FetchEvent>((event, emit) async {
       if (event == FetchEvent.loading) {
         try {
-          final brands = await apiClient.fetchBrands();
+          final brands = await apiClient.fetch('/hot');
           emit(FetchLoading(brands));
         } catch (error) {
           emit(FetchError(error.toString()));
