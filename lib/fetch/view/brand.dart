@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:new_dinker/app/bloc/app_bloc.dart';
 
 import '../../navigate/bloc/navigate_bloc.dart';
+import '../bloc/fetch_bloc.dart';
+import '../bloc/fetch_event.dart';
+import '../bloc/fetch_state.dart';
 
 class BrandPage extends StatefulWidget {
   @override
@@ -13,6 +14,13 @@ class BrandPage extends StatefulWidget {
 }
 
 class _BrandPageState extends State<BrandPage> {
+  @override
+  void initState() {
+    super.initState();
+    final _fetchBloc = BlocProvider.of<FetchBloc>(context); // Initialize FetchBloc
+    _fetchBloc.add(FetchEvent.loading); // Dispatch FetchLoading event
+  }
+
   @override
   Widget build(BuildContext context) {
     final navigationBloc = BlocProvider.of<NavigationBloc>(context);
@@ -66,30 +74,47 @@ class _BrandPageState extends State<BrandPage> {
               expandedHeight: MediaQuery.sizeOf(context).height/20,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text('Brands'),
+                title: Text('Brands', style: TextStyle(color: Colors.black),),
               ),
             ),
+
             SliverPadding(
               padding: const EdgeInsets.all(8.0),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Column(
-                      children: <Widget>[
-                        ListTile(
-                          title: Text('Brand $index'),
-                          onTap: () {
-                            print('Brand $index');
-                          },
+              sliver: BlocBuilder<FetchBloc, FetchState>(
+                  builder: (context, state) {
+                    print(state.brands);
+
+                    if (state is FetchLoading) {
+                      return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              return ListTile(
+                                title: Text(state.brands[index]),
+                                onTap: () {
+                                  print('Brand ${state.brands[index]}');
+                                },
+                              );
+                            },
+                            childCount: state.brands.length,
+                          ),
+                      );
+                    }
+                    else if (state is FetchError) {
+                      return SliverToBoxAdapter(
+                        key: UniqueKey(),
+                        child: Center(
+                          child: Text('Error: ${state.error}'),
                         ),
-                        const Divider(),
-                      ],
-                    );
+                      );
+                    } else {
+                      return SliverToBoxAdapter(
+                          key: UniqueKey(),
+                          child: CircularProgressIndicator()
+                      );
+                    }
                   },
-                  childCount: 20,
                 ),
               ),
-            ),
           ],
         ),
       ),

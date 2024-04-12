@@ -7,7 +7,9 @@ import 'package:new_dinker/theme.dart';
 import 'package:new_dinker/navigate/bloc/navigate_bloc.dart';
 import 'package:new_dinker/home/view/home_page.dart';
 
-import '../../fetch/view/brand.dart';
+import 'package:new_dinker/fetch/bloc/fetch_bloc.dart';
+import 'package:new_dinker/fetch/models/api_client.dart';
+import 'package:new_dinker/fetch/view/brand.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -31,7 +33,6 @@ class App extends StatelessWidget {
   }
 }
 
-
 class AppView extends StatelessWidget {
   const AppView({Key? key});
 
@@ -41,6 +42,7 @@ class AppView extends StatelessWidget {
       home: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => NavigationBloc()),
+          BlocProvider(create: (context) => FetchBloc(ApiClient("https://api.sampleapis.com/coffee"))),
           // Add more bloc providers if needed
         ],
         child: BlocBuilder<NavigationBloc, NavigationState>(
