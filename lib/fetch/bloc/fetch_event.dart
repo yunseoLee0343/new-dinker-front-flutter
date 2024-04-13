@@ -1,0 +1,1 @@
+enum FetchEvent { loading, error }

@@ -1,9 +1,15 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_dinker/app/app.dart';
 import 'package:new_dinker/theme.dart';
+
+import 'package:new_dinker/navigate/bloc/navigate_bloc.dart';
+import 'package:new_dinker/home/view/home_page.dart';
+
+import 'package:new_dinker/fetch/bloc/fetch_bloc.dart';
+import 'package:new_dinker/fetch/models/api_client.dart';
+import 'package:new_dinker/fetch/view/brand.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -28,15 +34,27 @@ class App extends StatelessWidget {
 }
 
 class AppView extends StatelessWidget {
-  const AppView({super.key});
+  const AppView({Key? key});
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      theme: theme,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => NavigationBloc()),
+          BlocProvider(create: (context) => FetchBloc(ApiClient("http://127.0.0.1:8000/fetch/starbucks/product_name/카푸치노"))),
+          // Add more bloc providers if needed
+        ],
+        child: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
+            if (state is NavigationBrandsState) {
+              return BrandPage();
+            } else {
+              return HomePage();
+            }
+          },
+        ),
       ),
     );
   }
