@@ -7,13 +7,14 @@ class ApiClient {
   ApiClient(this.baseUrl);
 
   Future<List<String>> fetch(String detailUrl) async {
-    final response = await http.get(Uri.parse('$baseUrl' + detailUrl));
-    //final response = await http.get(Uri.parse('$baseUrl/brands'));
+    print('$baseUrl' + detailUrl + '/');
+    final response = await http.get(Uri.parse('$baseUrl' + detailUrl + '/'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
-      return data.map((item) => item['title'] as String).toList();
+      return data.map((item) => item['content'] as String).toList();
     } else {
+      print(response);
       throw Exception('Failed to fetch brands');
     }
   }

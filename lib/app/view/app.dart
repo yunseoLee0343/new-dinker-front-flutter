@@ -38,11 +38,12 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => NavigationBloc()),
-          BlocProvider(create: (context) => FetchBloc(ApiClient("https://api.sampleapis.com/coffee"))),
+          BlocProvider(create: (context) => FetchBloc(ApiClient("http://127.0.0.1:8000/fetch/starbucks/product_name/카푸치노"))),
           // Add more bloc providers if needed
         ],
         child: BlocBuilder<NavigationBloc, NavigationState>(

@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
 
   static Page<void> page() => const MaterialPage<void>(child: HomePage());
 
+
   @override
   Widget build(BuildContext context) {
     final navigationBloc = BlocProvider.of<NavigationBloc>(context);
@@ -88,7 +89,10 @@ class HomePage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: Colors.amber,
                                   ),
-                                  child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('card $i', style: TextStyle(fontSize: 16.0),),
+                                  )
                               );
                             },
                           );
@@ -123,8 +127,12 @@ class HomePage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return Container(
                                 width: 100.0,
+                                height: 40.0,
                                 child: Card(
-                                  child: Text('data'),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('Product $index'),
+                                  ),
                                 ),
                               );
                             }),

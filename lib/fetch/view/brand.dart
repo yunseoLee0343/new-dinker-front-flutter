@@ -7,6 +7,7 @@ import '../../navigate/bloc/navigate_bloc.dart';
 import '../bloc/fetch_bloc.dart';
 import '../bloc/fetch_event.dart';
 import '../bloc/fetch_state.dart';
+import 'each_brand.dart';
 
 class BrandPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class BrandPage extends StatefulWidget {
 }
 
 class _BrandPageState extends State<BrandPage> {
+
   @override
   void initState() {
     super.initState();
@@ -70,10 +72,12 @@ class _BrandPageState extends State<BrandPage> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
+            SliverPadding(padding: const EdgeInsets.all(8.0)),
             SliverAppBar(
               expandedHeight: MediaQuery.sizeOf(context).height/20,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
+                background: ColoredBox(color: Colors.amberAccent),
                 title: Text('Brands', style: TextStyle(color: Colors.black),),
               ),
             ),
@@ -89,7 +93,8 @@ class _BrandPageState extends State<BrandPage> {
                               return ListTile(
                                 title: Text(state.brands[index]),
                                 onTap: () {
-                                  print('Brand ${state.brands[index]}');
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => EachBrandPage()));
+                                  //print('Brand ${state.brands[index]}');
                                 },
                               );
                             },
